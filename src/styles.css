@@ -1,0 +1,24 @@
+.cursor {
+  cursor: pointer;
+}
+.cursor:hover {
+  background-color: lightblue;
+}
+.no-style {
+  list-style: none;
+}
+.decorate {
+  display: list-item;
+  margin-left: 15px;
+}
+.backward {
+  height: 100vh;
+}
+.backward:hover {
+  background-color: lightslategrey;
+  cursor: pointer;
+}
+.backward-icon{
+  font-size: 45px;
+  position: fixed;
+}

@@ -1,0 +1,9 @@
+<div class="col-md-4 col-md-offset-4">
+  <h1 class="text-center">List of users:</h1>
+  <ul class="list-group">
+    <li class="list-group-item cursor" *ngFor="let user of users" (click)="onClick(user.login)">
+      <img src="{{user.avatar_url}}" alt="" style="max-height: 50px">
+      <span>{{user.login}}</span>
+    </li>
+  </ul>
+</div>
