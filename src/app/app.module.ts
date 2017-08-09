@@ -9,6 +9,7 @@ import {UsersService} from './users-list/users.service';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import {AppRoutingModule} from './app.routing.module';
 import { RepoInfoComponent } from './user-details/repo-info/repo-info.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { RepoInfoComponent } from './user-details/repo-info/repo-info.component'
     FormsModule,
     HttpModule,
     AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [UsersService],
   bootstrap: [AppComponent]

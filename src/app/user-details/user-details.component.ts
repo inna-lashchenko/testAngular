@@ -9,55 +9,63 @@ import {UsersService} from '../users-list/users.service';
   styleUrls: ['./user-details.component.css']
 })
 export class UserDetailsComponent implements OnInit, OnDestroy {
-  paramsSubscription: Subscription;
+  paramsSubscription: Subscription[] = [];
   name = '';
   userDetails = {};
   userRepos = [];
 
   constructor(private route: ActivatedRoute,
               private usersService: UsersService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.name = this.route.snapshot.params['name'];
-    this.paramsSubscription = this.route.params
+    this.paramsSubscription.push(this.route.params
       .subscribe(
         (params: Params) => {
           this.name = params['name'];
         }
-      );
+      )
+    );
     this.getUser();
     this.getRepos();
   }
 
-  ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
-  }
-
   getUser() {
-    this.usersService.apiRun('users/' + this.name)
+    this.paramsSubscription.push(this.usersService.apiRun('users/' + this.name)
       .subscribe(
         (response) => {
           this.userDetails = response;
         },
         (error) => console.log(error)
-      );
+      )
+    );
   }
 
   getRepos() {
-    this.usersService.apiRun('users/' + this.name + '/repos')
+    this.paramsSubscription.push(this.usersService.apiRun('users/' + this.name + '/repos')
       .subscribe(
         (response) => {
           this.userRepos = response;
         },
         (error) => console.log(error)
-      );
+      )
+    );
   }
+
   loadRepo(repo: string) {
     this.router.navigate([repo], {relativeTo: this.route});
   }
+
   backward() {
     this.router.navigate(['../'], {relativeTo: this.route});
+  }
+
+  ngOnDestroy() {
+    this.paramsSubscription.forEach(function (elem) {
+      elem.unsubscribe();
+    });
   }
 
 }

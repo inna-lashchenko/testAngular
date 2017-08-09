@@ -9,7 +9,7 @@ import {UsersService} from '../../users-list/users.service';
   styleUrls: ['./repo-info.component.css']
 })
 export class RepoInfoComponent implements OnInit, OnDestroy {
-  paramsSubscription: Subscription;
+  paramsSubscription: Subscription[] = [];
   name = '';
   repo = '';
   forks = [];
@@ -18,61 +18,68 @@ export class RepoInfoComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
               private usersService: UsersService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.name = this.route.snapshot.params['name'];
     this.repo = this.route.snapshot.params['repo'];
-    this.paramsSubscription = this.route.params
+    this.paramsSubscription.push(this.route.params
       .subscribe(
         (params: Params) => {
           this.name = params['name'];
           this.repo = params['repo'];
         }
-      );
+      )
+    );
     this.getRepo();
     this.getForks();
     this.getCommits();
   }
 
-  ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
-  }
   getRepo() {
-    this.usersService.apiRun('repos/' + this.name + '/' + this.repo)
+    this.paramsSubscription.push(this.usersService.apiRun('repos/' + this.name + '/' + this.repo)
       .subscribe(
         (response) => {
           this.repoInfo = response;
-          console.log(this.repoInfo);
         },
         (error) => console.log(error)
-      );
+      )
+    );
   }
+
   loadRepo(repo: string) {
     this.router.navigate([repo], {relativeTo: this.route});
   }
+
   getForks() {
-    this.usersService.apiRun('repos/' + this.name + '/' + this.repo + '/forks')
+    this.paramsSubscription.push(this.usersService.apiRun('repos/' + this.name + '/' + this.repo + '/forks')
       .subscribe(
         (response) => {
           this.forks = response;
-          console.log(this.forks);
         },
         (error) => console.log(error)
-      );
+      ));
   }
+
   getCommits() {
-    this.usersService.apiRun('repos/' + this.name + '/' + this.repo + '/commits')
+    this.paramsSubscription.push(this.usersService.apiRun('repos/' + this.name + '/' + this.repo + '/commits')
       .subscribe(
         (response) => {
           this.commits = response;
-          console.log(this.commits);
         },
         (error) => console.log(error)
-      );
+      ));
   }
+
   backward() {
     this.router.navigate(['../'], {relativeTo: this.route});
+  }
+
+  ngOnDestroy() {
+    this.paramsSubscription.forEach(function (elem) {
+      elem.unsubscribe();
+    });
   }
 
 }
