@@ -23,10 +23,10 @@ import {animate, group, query, style, transition, trigger} from '@angular/animat
 
         group([
           query(':leave', group([
-            animate('500ms cubic-bezier(.35,0,.25,1)', style({transform: 'translate3d(-100%,0,0)'})), // y: '-100%'
+            animate('1000ms cubic-bezier(.35,0,.25,1)', style({transform: 'translate3d(-100%,0,0)'})), // y: '-100%'
           ]), {optional: true}),
           query(':enter', group([
-            animate('500ms cubic-bezier(.35,0,.25,1)', style({transform: 'translate3d(0%,0,0)'})),
+            animate('1000ms cubic-bezier(.35,0,.25,1)', style({transform: 'translate3d(0%,0,0)'})),
           ]), {optional: true})
         ])
       ]),
@@ -45,10 +45,10 @@ import {animate, group, query, style, transition, trigger} from '@angular/animat
         }), {optional: true}),
         group([
           query(':leave', group([
-            animate('500ms cubic-bezier(.35,0,.25,1)', style({transform: 'translate3d(100%,0,0)'})), // y: '-100%'
+            animate('1000ms cubic-bezier(.35,0,.25,1)', style({transform: 'translate3d(100%,0,0)'})), // y: '-100%'
           ]), {optional: true}),
           query(':enter', group([
-            animate('500ms cubic-bezier(.35,0,.25,1)', style({transform: 'translate3d(0%,0,0)'})),
+            animate('1000ms cubic-bezier(.35,0,.25,1)', style({transform: 'translate3d(0%,0,0)'})),
           ]), {optional: true})
         ])
       ]),
